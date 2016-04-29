@@ -37,8 +37,8 @@ public class Pokemon {
 		return vida;
 	}
 
-	public void setVida(long vida) {
-		this.vida = vida;
+	public void setVida(double d) {
+		this.vida = d;
 	}
 
 	public double getPoder() {
