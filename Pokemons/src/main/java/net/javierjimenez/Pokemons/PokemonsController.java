@@ -93,8 +93,6 @@ public class PokemonsController implements Initializable {
 
 			int pokemonId = poket_monster.getInt(1);
 
-			System.out.println(pokemonId);
-
 			poket_monster.close();
 
 			pokemon_type = cerca.executeQuery("SELECT TIPUS_ID FROM POKETIPUS WHERE POKEMON_ID = " + pokemonId);
@@ -150,11 +148,14 @@ public class PokemonsController implements Initializable {
 		combatVermell.setText(pokemons.get(1).getNom());
 		reservaBlau.setText(pokemons.get(2).getNom());
 		reservaVermell.setText(pokemons.get(3).getNom());
-
+		
+		generarEquip.setDisable(true);
 	}
 
 	public void startCombat(ActionEvent event) {
 
+		System.out.println(pokemons.get(0).getNom() + " " +pokemons.get(1).getNom() + " " + pokemons.get(2).getNom() + " " + pokemons.get(3).getNom());
+		
 		if (pokemons.get(0).getPes() < pokemons.get(1).getPes()) {
 
 			while (pokemons.get(0).getVida() <= 0 || pokemons.get(1).getVida() <= 0) {
@@ -175,14 +176,16 @@ public class PokemonsController implements Initializable {
 				reservaBlau.setDisable(true);
 			
 			} else {
+				
 				combatBlau.setText(pokemons.get(3).getNom());
 				reservaBlau.setText(pokemons.get(1).getNom());
 				reservaBlau.setDisable(true);
+				
 			}
 
 		} else {
 
-			while (pokemons.get(0).getVida() == 0 || pokemons.get(1).getVida() == 0) {
+			while (pokemons.get(0).getVida() <= 0 || pokemons.get(1).getVida() <= 0) {
 
 				pokemons.get(0).setVida(pokemons.get(0).getVida() - pokemons.get(1).getPoder());
 
@@ -191,7 +194,19 @@ public class PokemonsController implements Initializable {
 					pokemons.get(1).setVida(pokemons.get(1).getVida() - pokemons.get(0).getPoder());
 
 				}
+			}
+			
+			if(pokemons.get(0).getVida() <= 0){
 				
+				combatBlau.setText(pokemons.get(2).getNom());
+				reservaBlau.setText(pokemons.get(0).getNom());
+				reservaBlau.setDisable(true);
+			
+			} else {
+				
+				combatBlau.setText(pokemons.get(3).getNom());
+				reservaBlau.setText(pokemons.get(1).getNom());
+				reservaBlau.setDisable(true);
 			}
 		}
 	}
